@@ -1,8 +1,10 @@
 <?php
 
+use App\Models\Post;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,17 +34,11 @@ Route::post('/posts' , function () {
 });
 
 Route::get('/posts' , function () {
-    $posts = DB::table('posts')->latest()->get();
+    $posts = Post::all();
     return view('posts.index' , compact('posts'));
 });
 
 Route::get('/posts/{id}' , function ($id) {
-    $post = DB::table('posts')->find($id);
+    $post = Post::findOrFail($id);
     return view('posts.show' , compact('post') );
 });
-
-
-
-
-
-
