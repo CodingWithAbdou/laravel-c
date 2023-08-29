@@ -211,6 +211,16 @@
                     <p class="my-2">
                         <?= $post->body ?>
                     </p>
+                    <h1>التعليقات</h1>
+                    <?php foreach ($comments as $comment)  : ?>
+                    <p>
+                        <?= $comment->name  ?>
+                    </p>
+                    <p>
+                        <?= $comment->body  ?>
+                    </p>
+                    <hr />
+                    <?php endforeach ?>
                 </div>
 
                 <nav class="blog-pagination">

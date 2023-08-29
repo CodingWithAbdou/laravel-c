@@ -40,5 +40,6 @@ Route::get('/posts' , function () {
 
 Route::get('/posts/{id}' , function ($id) {
     $post = Post::findOrFail($id);
-    return view('posts.show' , compact('post') );
+    $comments = $post->comments()->where('approved' , 1)->get();
+    return view('posts.show' , compact('post' , 'comments') );
 });
