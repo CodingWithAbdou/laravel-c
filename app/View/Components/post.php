@@ -1,8 +1,34 @@
+<?php
 
-@section('title' , 'المقالات')
+namespace App\View\Components;
 
-<x-layout>
+use Closure;
+use Illuminate\Contracts\View\View;
+use Illuminate\View\Component;
 
+class post extends Component
+
+{
+    /**
+     * Create a new component instance.
+     */
+    public $post ;
+    public $comments ;
+    public function __construct($post , $comments)
+    {
+        $this->post = $post;
+        $this->comments = $comments;
+    }
+
+
+    /**
+     * Get the view / contents that represent the component.
+     */
+    public function render(): View|Closure|string
+    {
+        return <<<'blade'
+
+<div>
 <main role="main" class="container">
     <div class="row">
         <div class="col-md-8 blog-main">
@@ -10,19 +36,32 @@
             From the Firehose
         </h3>
 
-        <?php foreach ($posts as $post ) : ?>
-            <div class="blog-post">
-                <a href="/posts/<?= $post->id ?>">
-                    <h2 class="blog-post-title">
-                        <?= $post->title ?>
-                    </h2>
-                </a>
-                <p class="blog-post-meta">
-                    <a href="#">بقلم <?= $post->author ?></a>
-                    <?= Carbon\Carbon::parse($post->created_at)-> diffForHumans() ?>
-                </p>
-            </div>
-        <?php endforeach ?>
+        <div class="blog-post">
+                <h2 class="blog-post-title">
+                    {{ $post->title }}
+                </h2>
+            <p class="blog-post-meta">
+                <a href="#">بقلم {{ $post->author }}</a>
+                {{ Carbon\Carbon::parse($post->created_at)-> diffForHumans()}}
+            </p>
+            <p class="my-2">
+                {{$post->body}}
+            </p>
+            <h1>التعليقات</h1>
+            @if (count($comments)  == 0)
+            <h2>لاتوجد تعليقات لعرضها </h2>
+            @else
+                @foreach ($comments as $comment)
+                    <p>
+                        {{$comment->name }}
+                    </p>
+                    <p>
+                        {{$comment->body}}
+                    </p>
+                    <hr />
+                @endforeach
+            @endif
+        </div>
 
         <nav class="blog-pagination">
             <a class="btn btn-outline-primary" href="#">Older</a>
@@ -68,4 +107,7 @@
     </div>
 </main>
 
-</x-layout>
+</div>
+blade;
+    }
+}
