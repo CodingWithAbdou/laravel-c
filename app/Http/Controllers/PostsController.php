@@ -34,7 +34,7 @@ class PostsController extends Controller
             'body' => request('body'),
             'author' => request('author'),
         ]);
-        redirect('/posts');
+        return redirect('/posts');
     }
     /**
      * Display the specified resource.
