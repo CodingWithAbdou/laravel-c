@@ -3,6 +3,7 @@
 
 <x-layout >
     <x-post  :post="$post"    />
+    <a href="/posts/{{$post->id}}/edit" class="btn btn-primary my-2 ">عدل المقالة </a>
     <h1>التعليقات</h1>
     @if (count($comments)  == 0)
     <h2>لاتوجد تعليقات لعرضها </h2>
