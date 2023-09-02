@@ -29,6 +29,7 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validation();
         Post::create([
             'title' => request('title'),
             'body' => request('body'),
@@ -59,6 +60,7 @@ class PostsController extends Controller
      */
     public function update(Post $post)
     {
+        $this->validation();
         $post->update([
             "title" => request('title'),
             "body" => request('body'),
@@ -73,5 +75,13 @@ class PostsController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+    public function validation()
+    {
+        request()->validate([
+            'title' => 'required|unique:posts|max:100',
+            'body' => 'required',
+            'author' => 'required',
+        ]);
     }
 }
