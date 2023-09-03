@@ -7,6 +7,6 @@
         <title>Laravel Project</title>
     </head>
     <body>
-        <h1>Welcome In Laravel Project</h1>
+
     </body>
 </html>

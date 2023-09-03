@@ -6,6 +6,7 @@ use App\Models\Post;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\App;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,3 +27,10 @@ Route::get('/', function () {
 Route::resource('posts' , PostsController::class);
 
 Route::post('/posts/{post}/comments' ,[ CommentsController::class , 'store'] );
+
+
+
+Route::get('/singup/{lang}' , function ($lang) {
+    App::setlocale($lang);
+    return view('singup');
+});
