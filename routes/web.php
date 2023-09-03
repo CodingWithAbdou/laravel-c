@@ -2,11 +2,13 @@
 
 use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\PostsController;
+use App\Mail\DiscountOffer;
 use App\Models\Post;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,4 +35,13 @@ Route::post('/posts/{post}/comments' ,[ CommentsController::class , 'store'] );
 Route::get('/singup/{lang}' , function ($lang) {
     App::setlocale($lang);
     return view('singup');
+});
+
+
+Route::post('/mail' , function() {
+    $email =  request()->validate([
+        'email' => 'required|email',
+    ]);
+    Mail::to($email)->send(new DiscountOffer());
+    return back();
 });
